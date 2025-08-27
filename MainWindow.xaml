@@ -14,7 +14,8 @@
     </Window.SystemBackdrop>
 
     <Grid HorizontalAlignment="Stretch"
-          VerticalAlignment="Stretch">
+          VerticalAlignment="Stretch"
+          x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <!-- CommandBar -->
@@ -37,7 +38,7 @@
 
         <ui:TableViewControl x:Name="TableView"
                              Grid.Row="2"
-                             TableViewClicked="TableViewClicked" />
+                             Items="{Binding MusicFiles}" />
     </Grid>
 
 </Window>

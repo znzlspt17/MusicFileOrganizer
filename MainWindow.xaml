@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="MusicFileOrganizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:MusicFileOrganizer"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MusicFileOrganizer"
+        xmlns:ui="using:MusicFileOrganizer.UI">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- CommandBar -->
+            <RowDefinition Height="Auto" />
+            <!-- DestinationSelector -->
+            <RowDefinition Height="*" />
+            <!-- TableView -->
+
+        </Grid.RowDefinitions>
+
+        <ui:CommandBarControl x:Name="CmdBar"
+                              Grid.Row="0"
+                              AddFolderClicked="AddFolderClicked"
+                              OrganizeClicked="OrganizeClicked" />
+
+        <ui:DestinationSelectorControl x:Name="DstBar"
+                                       Grid.Row="1"
+                                       DestinationSelectClicked="DestinationSelectClicked"
+                                       DestinationTapped="TabbedDstBar" />
+
+        <ui:TableViewControl x:Name="TableView"
+                             Grid.Row="2"
+                             TableViewClicked="TableViewClicked" />
+    </Grid>
+
+</Window>

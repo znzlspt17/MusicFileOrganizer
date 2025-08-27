@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="MusicFileOrganizer.UI.CommandBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:MusicFileOrganizer"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Column="0">
+            <AppBarButton x:Name="BtnAdd"
+                          Icon="Add"
+                          Label="Add Folder"
+                          Click="OnClickAdd"
+                          IsEnabled="{x:Bind IsAddFolderEnabled, Mode=OneWay}" />
+            <AppBarSeparator />
+            <AppBarButton x:Name="BtnOgnz"
+                          Icon="Accept"
+                          Label="Organize"
+                          Click="OnClickOrganize"
+                          IsEnabled="{x:Bind IsOrganizeEnabled, Mode=OneWay}" />
+        </CommandBar>
+
+        <TextBlock x:Name="StatusText"
+                   Grid.Column="1"
+                   Text="Loading..."
+                   FontFamily="Consolas"
+                   FontSize="20"
+                   Foreground="CornflowerBlue"
+                   VerticalAlignment="Center"
+                   Visibility="Collapsed" />
+    </Grid>
+</UserControl>

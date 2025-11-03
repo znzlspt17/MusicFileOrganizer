@@ -66,7 +66,7 @@ namespace MusicFileOrganizer.Services
             return directoryInfo;
         }
 
-        public async void DeleteCreatedFolderOnCancel()
+        public void DeleteCreatedFolderOnCancel()
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(_dstPath);
             directoryInfo.Delete();

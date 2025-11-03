@@ -194,6 +194,7 @@ dotnet build --configuration Release
 **znzlspt17**
 
 - GitHub: [@znzlspt17](https://github.com/znzlspt17)
+- E-mail: [znzlsit@naver.com](znzlsit@naver.com)
 
 ---
 

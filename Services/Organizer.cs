@@ -1,4 +1,6 @@
-﻿using MusicFileOrganizer.DTO;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+using MusicFileOrganizer.DTO;
 using MusicFileOrganizer.Utils;
 
 using System;
@@ -16,15 +18,12 @@ namespace MusicFileOrganizer.Services
         private readonly DirectoryManager directoryManager;
 
         private string dstPath = string.Empty;
-        private string left = string.Empty;
-        private string right = string.Empty;
-        private string fullPath = string.Empty;
         private bool stop = false;
 
-        public Organizer()
+        public Organizer(FileMetaRepository? repo = null, DirectoryManager? dirMgr = null)
         {
-            fileMetaRepository = new FileMetaRepository();
-            directoryManager = new DirectoryManager();
+            fileMetaRepository = repo ?? App.Services.GetRequiredService<FileMetaRepository>()!;
+            directoryManager = dirMgr ?? App.Services.GetRequiredService<DirectoryManager>()!;
         }
         public FileMetaRepository FileMetaRepository => this.fileMetaRepository;
         public DirectoryManager DirectoryManager => this.directoryManager;
@@ -48,7 +47,7 @@ namespace MusicFileOrganizer.Services
             return await directoryManager.CreateFolderAsync(file);
         }
 
-        public void SetSrcPathAsync(string srcPath)
+        public void SetSrcPath(string srcPath)
         {
             if (string.IsNullOrEmpty(srcPath))
             {
@@ -57,7 +56,7 @@ namespace MusicFileOrganizer.Services
             directoryManager.SrcPath = srcPath;
         }
 
-        public void SetDestPathAsync(string destPath)
+        public void SetDestPath(string destPath)
         {
             if (string.IsNullOrEmpty(destPath))
             {

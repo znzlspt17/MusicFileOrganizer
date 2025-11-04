@@ -70,7 +70,7 @@ namespace MusicFileOrganizer.Services
             Stopwatch stopwatch = new Stopwatch();
 
             var files = await Task.Run(()
-                => FileMetaFactory.CreateBulkAsync(directoryManager.SrcPath!, FileUtil.LoadFileNames(directoryManager.SrcPath!)));
+                => FileMetaFactory.CreateBulkAsync(directoryManager.SrcPath!, FileUtil.LoadFile(directoryManager.SrcPath!)));
 
             await fileMetaRepository.AddAll(files);
 
@@ -89,14 +89,14 @@ namespace MusicFileOrganizer.Services
 
         public async Task Start()
         {
-            await foreach (var file in fileMetaRepository.GetAll().ToAsyncEnumerable())
+            await foreach (FileMeta file in fileMetaRepository.GetAll().ToAsyncEnumerable())
             {
                 if (stop)
                 {
                     break;
                 }
                 DirectoryInfo directoryInfo = await directoryManager.CreateFolderAsync(file!);
-                await FileUtil.CopyFileAsync(directoryInfo, directoryManager!.SrcPath!, file.Name!);
+                await FileUtil.CopyFileAsync(directoryInfo, file.Path!, file.Name!);
             }
 
         }

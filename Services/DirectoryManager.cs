@@ -25,6 +25,7 @@ namespace MusicFileOrganizer.Services
                 _srcPath = value;
             }
         }
+
         public string? DstPath
         {
             get => _dstPath;

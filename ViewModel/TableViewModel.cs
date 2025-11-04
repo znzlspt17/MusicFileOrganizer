@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Microsoft.UI.Dispatching;
 
 namespace MusicFileOrganizer.ViewModel

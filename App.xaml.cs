@@ -58,6 +58,7 @@ namespace MusicFileOrganizer
             _window = new MainWindow();
             _window.SetTitleBar(null);
             _window.Activate();
+            FileMetaFactory.SetDispatcherQueue(_window.DispatcherQueue);
         }
     }
 }

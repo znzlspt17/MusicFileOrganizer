@@ -11,23 +11,35 @@ namespace MusicFileOrganizer.Utils
     {
         private static readonly StringBuilder stringBuilder = new StringBuilder();
 
-        public static IEnumerable<string> LoadFileNames(string sourcePath)
+        private static readonly HashSet<string> DefaultAudioExtensions = new(StringComparer.OrdinalIgnoreCase)
         {
+            ".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg", ".wma", ".alac", ".aiff", ".opus"
+        };
+
+        public static IAsyncEnumerable<(string, string)> LoadFile(string sourcePath, IEnumerable<string>? allowedExtensions = null)
+        {
+            var exts = allowedExtensions == null
+                ? DefaultAudioExtensions
+                : new HashSet<string>(allowedExtensions.Select(e => e.StartsWith('.') ? e : "." + e), StringComparer.OrdinalIgnoreCase);
+
             DirectoryInfo dirInfo = new DirectoryInfo(sourcePath);
-            IEnumerable<string> names = dirInfo
+
+            var tuples = dirInfo
                 .EnumerateFiles("*.*", SearchOption.AllDirectories)
-                .Select(fi => fi.Name)
-                .ToList();
-            return names;
+                .Where(fi => exts.Contains(fi.Extension)) // FileInfo.Extension은 ".확장자" 형태
+                .Select(fi => ((fi.DirectoryName ?? string.Empty), fi.Name))
+                .ToAsyncEnumerable();
+
+            return tuples;
         }
 
         //파일 옮김
         public static async Task CopyFileAsync(DirectoryInfo directoryInfo, string srcPath, string fileName)
         {
-            string originalPath = Path.Combine(srcPath, fileName);
+            string fileFullPath = Path.Combine(srcPath, fileName);
             string targetPath = Path.Combine(directoryInfo.FullName, fileName);
             targetPath = AddSuffixToFileNameAuto(targetPath);
-            await Task.Run(() => File.Copy(originalPath, targetPath, overwrite: false));
+            await Task.Run(() => File.Copy(fileFullPath, targetPath, overwrite: false));
         }
 
         // 중복시 숫자 서픽스 삽입
@@ -68,7 +80,7 @@ namespace MusicFileOrganizer.Utils
 
                     string fileName = new string(fileNameBuffer.Slice(0, pos + extSpan.Length));
 
-                    // ✅ dirSpan을 string으로 변환해서 Path.Combine 사용
+                    //dirSpan을 string으로 변환해서 Path.Combine 사용
                     targetPath = Path.Combine(dirSpan.ToString(), fileName);
 
                     suffix++;

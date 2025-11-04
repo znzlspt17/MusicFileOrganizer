@@ -59,8 +59,6 @@ MusicFileOrganizer/
 - **OS**: Windows 10 (1809) 이상
 - **런타임**: .NET 8.0 Runtime
 - **Windows App SDK**: 1.7
-- **메모리**: 최소 2GB RAM
-- **저장공간**: 100MB 이상
 
 ### 설치 방법
 
